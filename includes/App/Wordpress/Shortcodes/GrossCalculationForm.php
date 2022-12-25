@@ -53,6 +53,7 @@ class GrossCalculationForm
         }
 
         return sprintf('
+            %s
             <form action="" method="post">
             <h4>Gross Calculator</h4>
             %s
@@ -68,6 +69,7 @@ class GrossCalculationForm
             <br>
             <button value="calculate" type="submit">Oblicz</button>
             </form>',
+            $this->getMessageHtml($messageContent,$success),
             wp_nonce_field('gross_calculation', 'gross_calculation_nonce'),
             self::CALCULATION_CURRENCY,
             self::getPossibleVatRatesOptions());
@@ -97,5 +99,23 @@ class GrossCalculationForm
     public static function getCalculationCurrency(): string
     {
         return self::CALCULATION_CURRENCY;
+    }
+
+    /**
+     * Returns string html with output message from creating calculation.
+     *
+     * @param string $messageContent
+     * @param bool $success
+     * @return string
+     */
+    private function getMessageHtml(string $messageContent, bool $success)
+    {
+        if(!$messageContent){
+            return '';
+        }
+
+        return sprintf('
+        <p>%s</p>
+        ', $messageContent);
     }
 }
