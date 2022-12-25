@@ -46,15 +46,20 @@ class GrossCalculation
             'public' => true,
             'show_ui' => true,
             'show_in_menu' => true,
-            'menu_position' => 5,
+            'menu_position' => 100,
             'show_in_admin_bar' => true,
             'show_in_nav_menus' => true,
             'can_export' => true,
             'has_archive' => true,
             'exclude_from_search' => false,
             'publicly_queryable' => true,
-            'capability_type' => 'page',
+            'capability_type' => 'post',
+            'capabilities' => array(
+                 'create_posts' => false, // Removes support for the "Add New" function ( use 'do_not_allow' instead of false for multisite set ups )
+            ),
+            'map_meta_cap' => true,
             'show_in_rest' => true,
+            'menu_icon' => 'dashicons-money-alt',
         );
         register_post_type(self::CPT_NAME, $args);
     }
