@@ -57,6 +57,7 @@ class GrossCalculatorService
 
         $postData = [
             'post_title' => $service->productName,
+            'post_content' => $service->getCalculationSuccessMessage(),
             'post_status' => 'publish',
             'post_type' => GrossCalculation::getGrossCalculationCPTName(),
             'meta_input' => $service->getCalculationMetaInput(),
@@ -68,10 +69,7 @@ class GrossCalculatorService
             throw new \Exception('Gross calculation can not be saved.');
         }
 
-        return sprintf('Cena produktu %s, wynosi: %.2f zł brutto, kwota podatku to %.2f zł.'
-            , $service->productName
-            , $service->grossValue,
-            $service->taxValue);
+        return $service->getCalculationSuccessMessage();
     }
 
     /**
@@ -171,5 +169,20 @@ class GrossCalculatorService
         }
 
         return $ip;
+    }
+
+    /**
+     * Returns string with finished calculation data.
+     *
+     * @return string
+     */
+    private function getCalculationSuccessMessage(): string
+    {
+
+        return sprintf('Cena produktu %s, wynosi: %.2f zł brutto, kwota podatku to %.2f zł.'
+            , $this->productName
+            , $this->grossValue,
+            $this->taxValue);
+
     }
 }
