@@ -9,6 +9,7 @@
 
 
 use GrossCalculator\Wordpress\PostTypes\GrossCalculation;
+use GrossCalculator\Wordpress\Shortcodes\GrossCalculationForm;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -28,12 +29,14 @@ class GrossCalculator{
 
     }
 
-    public function registerCPTs(){
+    public function registerCPTs(): void
+    {
         GrossCalculation::register();
     }
 
-    public function registerShortCodes(){
-       //register shortcode class
+    public function registerShortCodes(): void
+    {
+       GrossCalculationForm::register();
     }
 
 
