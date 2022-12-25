@@ -2,6 +2,8 @@
 
 namespace GrossCalculator\Wordpress\Shortcodes;
 
+use GrossCalculator\Services\GrossCalculatorService;
+
 class GrossCalculationForm
 {
     private const CALCULATION_CURRENCY = 'PLN';
@@ -27,6 +29,17 @@ class GrossCalculationForm
 
     public function getCalculationFormHtml(): string
     {
+        $messageContent = '';
+        $success = true;
+
+        if(!empty($_POST['calculation'])){
+            try {
+                $messageContent = GrossCalculatorService::createCalculation($_POST['calculation']);
+            }catch (\Exception $e){
+                $messageContent = $e->getMessage();
+                $success = false;
+            }
+        }
 
         return sprintf('
             <form action="" method="post">

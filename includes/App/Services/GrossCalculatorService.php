@@ -29,9 +29,35 @@ class GrossCalculatorService
         $this->vatRate = $calculationData['vat_rate'];
 
         $this->calculate();
-        var_dump($this->validateFields($calculationData));
     }
 
+    public static function createCalculation(array $calculationData)
+    {
+
+        try {
+            $service = new self($calculationData);
+        } catch (\Exception $e) {
+            throw new \Exception($e);
+        }
+
+        $postData = [
+            'post_title' => $service->productName,
+            'post_status' => 'publish',
+            'post_type' => GrossCalculation::getGrossCalculationCPTName(),
+            'meta_input' => $service->getCalculationMetaInput(),
+        ];
+        try {
+            wp_insert_post($postData);
+        } catch (\Exception $e) {
+            error_log('Gross calculation can not be saved: ' . $e->getMessage());
+            throw new \Exception('Gross calculation can not be saved.');
+        }
+
+        return sprintf('Cena produktu %s, wynosi: %.2f zł brutto, kwota podatku to %.2f zł.'
+            , $service->productName
+            , $service->grossValue,
+            $service->taxValue);
+    }
 
     private function validateFields(array $calculationData): array
     {
@@ -75,5 +101,39 @@ class GrossCalculatorService
 
         $this->grossValue = $this->netAmount + $this->taxValue;
 
+    }
+
+    private function getCalculationMetaInput(): array
+    {
+        $result = [];
+
+        $result['product_name'] = $this->productName;
+        $result['net_value'] = $this->netAmount;
+        $result['gross_value'] = $this->grossValue;
+        $result['tax'] = $this->taxValue;
+        $result['currency'] = $this->currency;
+        $result['vat_rate'] = $this->vatRate;
+        $result['ip_address'] = $this->getCurrentUserIP();
+        $result['calculation_date'] = date('d.m.y');
+
+        return $result;
+    }
+
+    private function getCurrentUserIP()
+    {
+        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+
+            $ip = $_SERVER['HTTP_CLIENT_IP'];
+
+        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+
+            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+
+        } else {
+
+            $ip = $_SERVER['REMOTE_ADDR'];
+        }
+
+        return $ip;
     }
 }
