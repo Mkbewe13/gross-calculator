@@ -15,6 +15,13 @@ class GrossCalculatorService
     private float $grossValue;
     private float $taxValue;
 
+
+    /**
+     * Validate calculation data and set service properties. Throws exception if any of calculation data is wrong.
+     *
+     * @param array $calculationData
+     * @throws \Exception
+     */
     public function __construct(array $calculationData)
     {
         try {
@@ -31,6 +38,14 @@ class GrossCalculatorService
         $this->calculate();
     }
 
+    /**
+     * Insert new post (cpt: gross_calculation) with all calculated data as meta custom fields.
+     * Returns message about calculation on success or throws exception on failure.
+     *
+     * @param array $calculationData
+     * @return string
+     * @throws \Exception
+     */
     public static function createCalculation(array $calculationData)
     {
 
@@ -59,6 +74,13 @@ class GrossCalculatorService
             $service->taxValue);
     }
 
+    /**
+     * Validate all calculation data fields.
+     *
+     * @param array $calculationData
+     * @return array
+     * @throws \Exception
+     */
     private function validateFields(array $calculationData): array
     {
 
@@ -90,7 +112,11 @@ class GrossCalculatorService
         return $result;
     }
 
-
+    /**
+     * Perform calculation for gross value and tax value by given product data.
+     *
+     * @return void
+     */
     private function calculate(): void
     {
         $this->taxValue = 0;
@@ -103,6 +129,11 @@ class GrossCalculatorService
 
     }
 
+    /**
+     * Returns array of prepared meta input for custom post insertion.
+     *
+     * @return array
+     */
     private function getCalculationMetaInput(): array
     {
         $result = [];
@@ -119,6 +150,11 @@ class GrossCalculatorService
         return $result;
     }
 
+    /**
+     * Returns current user ip.
+     *
+     * @return mixed
+     */
     private function getCurrentUserIP()
     {
         if (!empty($_SERVER['HTTP_CLIENT_IP'])) {

@@ -29,11 +29,21 @@ class GrossCalculator{
 
     }
 
+    /**
+     * Register custom post type classes
+     *
+     * @return void
+     */
     public function registerCPTs(): void
     {
         GrossCalculation::register();
     }
 
+    /**
+     * Register shortcode classes
+     *
+     * @return void
+     */
     public function registerShortCodes(): void
     {
        GrossCalculationForm::register();

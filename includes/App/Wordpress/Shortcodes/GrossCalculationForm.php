@@ -21,12 +21,23 @@ class GrossCalculationForm
         'o.o.' => 0,
     ];
 
+    /**
+     * Register custom shortcode with calculation form.
+     *
+     * @return void
+     */
     public static function register(): void
     {
         $form = new self();
         add_shortcode('gross_calculator', [$form,'getCalculationFormHtml']);
     }
 
+    /**
+     * Returns html string with calculation form, and handles calculation output message.
+     *
+     * @return string
+     *
+     */
     public function getCalculationFormHtml(): string
     {
         $messageContent = '';
@@ -62,6 +73,11 @@ class GrossCalculationForm
             self::getPossibleVatRatesOptions());
     }
 
+    /**
+     * Return html string with all possible tax rate options for select.
+     *
+     * @return string
+     */
     private static function getPossibleVatRatesOptions(): string
     {
         $html = '';
@@ -73,6 +89,11 @@ class GrossCalculationForm
         return $html;
     }
 
+    /**
+     * Returns calculation currency set by class constant.
+     *
+     * @return string
+     */
     public static function getCalculationCurrency(): string
     {
         return self::CALCULATION_CURRENCY;
