@@ -8,6 +8,8 @@
  */
 
 
+use GrossCalculator\Wordpress\PostTypes\GrossCalculation;
+
 if (!defined('ABSPATH')) {
     exit;
 }
@@ -27,7 +29,7 @@ class GrossCalculator{
     }
 
     public function registerCPTs(){
-        //register cpt class
+        GrossCalculation::register();
     }
 
     public function registerShortCodes(){
