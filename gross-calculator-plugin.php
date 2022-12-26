@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:     Gross Calculator
- * Description:     Adds custom shortcode with a form where you can create a post with gross and tax value calculation. The newly added post type will have a custom post type: gross-calculation
+ * Description:     Adds custom shortcode {gross_calculation} with a form where you can create a post with gross and tax value calculation. The newly added post type will have a custom post type: gross-calculation
  * Author:          Jakub Owczarek
  * Text Domain:     GC
  * Version:         0.1

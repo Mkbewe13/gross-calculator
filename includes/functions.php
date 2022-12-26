@@ -66,3 +66,30 @@ function registerGrossCalculatorCss()
     wp_register_style('gross-calc-style', plugins_url('resources/css/style.css', __FILE__));
     wp_enqueue_style('gross-calc-style');
 }
+
+add_action('admin_menu', 'gross_calc_readme_submenu_page');
+/**
+ * Adds a submenu page under a custom post type parent.
+ */
+function gross_calc_readme_submenu_page() {
+    add_submenu_page(
+        'edit.php?post_type=' . \GrossCalculator\Wordpress\PostTypes\GrossCalculation::getGrossCalculationCPTName(),
+        'Readme',
+        'Readme',
+        'manage_options',
+        'gross-calc-readme',
+        'gross_calc_readme_page_callback'
+    );
+}
+
+/**
+ * Display callback for the submenu page.
+ */
+function gross_calc_readme_page_callback() {
+    printf('<div class="wrap">
+        <h1>Informacje</h1>
+        <p>Aby dodać formularz z kalkulatorem dodaj go za pomocą shortcodu.</p>
+        <p>Umieść <b>[gross_calculator]</b> na wybranej stronie lub w wybranym poście i gotowe!</p>
+    </div>');
+}
+
