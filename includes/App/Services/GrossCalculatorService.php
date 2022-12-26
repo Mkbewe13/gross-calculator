@@ -12,8 +12,8 @@ class GrossCalculatorService
     private float $netAmount;
     private string $currency;
     private float $vatRate;
-    private float $grossValue;
-    private float $taxValue;
+    private float $grossAmount;
+    private float $taxAmount;
 
 
     /**
@@ -117,13 +117,13 @@ class GrossCalculatorService
      */
     private function calculate(): void
     {
-        $this->taxValue = 0;
+        $this->taxAmount = 0;
 
         if($this->vatRate != 0){
-            $this->taxValue = ($this->vatRate / 100) * $this->netAmount;
+            $this->taxAmount = ($this->vatRate / 100) * $this->netAmount;
         }
 
-        $this->grossValue = $this->netAmount + $this->taxValue;
+        $this->grossAmount = $this->netAmount + $this->taxAmount;
 
     }
 
@@ -138,8 +138,8 @@ class GrossCalculatorService
 
         $result['product_name'] = $this->productName;
         $result['net_value'] = $this->netAmount;
-        $result['gross_value'] = $this->grossValue;
-        $result['tax'] = $this->taxValue;
+        $result['gross_value'] = $this->grossAmount;
+        $result['tax'] = $this->taxAmount;
         $result['currency'] = $this->currency;
         $result['vat_rate'] = $this->vatRate;
         $result['ip_address'] = $this->getCurrentUserIP();
@@ -181,8 +181,8 @@ class GrossCalculatorService
 
         return sprintf('Cena produktu %s, wynosi: %.2f zł brutto, kwota podatku to %.2f zł.'
             , $this->productName
-            , $this->grossValue,
-            $this->taxValue);
+            , $this->grossAmount,
+            $this->taxAmount);
 
     }
 }
