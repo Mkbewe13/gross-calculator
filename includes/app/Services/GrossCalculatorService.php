@@ -26,7 +26,7 @@ class GrossCalculatorService
     {
         try {
             $calculationData = $this->validateFields($calculationData);
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             throw new \Exception('Wystąpił błąd podczas podczas wyliczania wartości brutto: ' . $e->getMessage());
         }
 
@@ -119,7 +119,7 @@ class GrossCalculatorService
     {
         $this->taxAmount = 0;
 
-        if($this->vatRate != 0){
+        if ($this->vatRate != 0) {
             $this->taxAmount = ($this->vatRate / 100) * $this->netAmount;
         }
 

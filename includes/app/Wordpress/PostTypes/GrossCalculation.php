@@ -55,7 +55,7 @@ class GrossCalculation
             'publicly_queryable' => true,
             'capability_type' => 'post',
             'capabilities' => array(
-                 'create_posts' => false, // Removes support for the "Add New" function ( use 'do_not_allow' instead of false for multisite set ups )
+                'create_posts' => false, // Removes support for the "Add New" function ( use 'do_not_allow' instead of false for multisite set ups )
             ),
             'map_meta_cap' => true,
             'show_in_rest' => true,
@@ -64,7 +64,8 @@ class GrossCalculation
         register_post_type(self::CPT_NAME, $args);
     }
 
-    public static function getGrossCalculationCPTName(){
+    public static function getGrossCalculationCPTName()
+    {
         return self::CPT_NAME;
     }
 

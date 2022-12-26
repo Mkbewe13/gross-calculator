@@ -29,7 +29,7 @@ class GrossCalculationForm
     public static function register(): void
     {
         $form = new self();
-        add_shortcode('gross_calculator', [$form,'getCalculationFormHtml']);
+        add_shortcode('gross_calculator', [$form, 'getCalculationFormHtml']);
     }
 
     /**
@@ -43,10 +43,10 @@ class GrossCalculationForm
         $messageContent = '';
         $success = true;
 
-        if(!empty($_POST['calculation'])){
+        if (!empty($_POST['calculation'])) {
             try {
                 $messageContent = GrossCalculatorService::createCalculation($_POST['calculation']);
-            }catch (\Exception $e){
+            } catch (\Exception $e) {
                 $messageContent = $e->getMessage();
                 $success = false;
             }
@@ -72,7 +72,7 @@ class GrossCalculationForm
             <button class="gross-calc-submit" value="calculate" type="submit">Oblicz</button>
             </form>
             </div>',
-            $this->getMessageHtml($messageContent,$success),
+            $this->getMessageHtml($messageContent, $success),
             wp_nonce_field('gross_calculation', 'gross_calculation_nonce'),
             self::CALCULATION_CURRENCY,
             self::getPossibleVatRatesOptions());
@@ -87,8 +87,8 @@ class GrossCalculationForm
     {
         $html = '';
 
-        foreach (self::POSSIBLE_VAT_RATES as $rate_label => $rate_value){
-            $html .= sprintf('<option value="%d">%s</option>',$rate_value,$rate_label);
+        foreach (self::POSSIBLE_VAT_RATES as $rate_label => $rate_value) {
+            $html .= sprintf('<option value="%d">%s</option>', $rate_value, $rate_label);
         }
 
         return $html;
@@ -113,11 +113,11 @@ class GrossCalculationForm
      */
     private function getMessageHtml(string $messageContent, bool $success)
     {
-        if(!$messageContent){
+        if (!$messageContent) {
             return '';
         }
 
-        if ($success){
+        if ($success) {
             return sprintf('
         <p class="gross-calc-success">%s</p>
         ', $messageContent);

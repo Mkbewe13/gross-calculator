@@ -57,11 +57,12 @@ function updateGrossCalculationContent($post_id, $post_after, $post_before): voi
 
 }
 
-add_action( 'wp_enqueue_scripts', 'registerGrossCalculatorCss' );
+add_action('wp_enqueue_scripts', 'registerGrossCalculatorCss');
 /**
  * Enqueue plugin style-file
  */
-function registerGrossCalculatorCss() {
-    wp_register_style( 'gross-calc-style', plugins_url('resources/css/style.css', __FILE__) );
-    wp_enqueue_style( 'gross-calc-style' );
+function registerGrossCalculatorCss()
+{
+    wp_register_style('gross-calc-style', plugins_url('resources/css/style.css', __FILE__));
+    wp_enqueue_style('gross-calc-style');
 }
