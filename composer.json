@@ -1,5 +1,6 @@
 {
     "autoload": {
+        "files": ["includes/functions.php"],
         "psr-4": {
             "GrossCalculator\\": "includes/App/"
         }
