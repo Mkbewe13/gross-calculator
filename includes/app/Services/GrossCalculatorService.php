@@ -27,7 +27,7 @@ class GrossCalculatorService
         try {
             $calculationData = $this->validateFields($calculationData);
         }catch(\Exception $e){
-            throw new \Exception('An error occured while creating new gross calculation: ' . $e->getMessage());
+            throw new \Exception('Wystąpił błąd podczas podczas wyliczania wartości brutto: ' . $e->getMessage());
         }
 
         $this->productName = $calculationData['product_name'];
@@ -66,7 +66,7 @@ class GrossCalculatorService
             wp_insert_post($postData);
         } catch (\Exception $e) {
             error_log('Gross calculation can not be saved: ' . $e->getMessage());
-            throw new \Exception('Gross calculation can not be saved.');
+            throw new \Exception('Wystąpił błąd. Wyliczenie nie może zostać zapisane.');
         }
 
         return $service->getCalculationSuccessMessage();
@@ -85,24 +85,24 @@ class GrossCalculatorService
         $result = array();
 
         if (empty($calculationData)) {
-            throw new \Exception('wrong calculation data.');
+            throw new \Exception('błąd danych');
         }
 
         if (!isset($calculationData['product_name']) || !$calculationData['product_name']) {
-            throw new \Exception('wrong product name.');
+            throw new \Exception('błędna nazwa produktu');
         }
 
         $result['product_name'] = sanitize_text_field($calculationData['product_name']);
 
         if (!isset($calculationData['net_amount']) || !$calculationData['net_amount']) {
-            throw new \Exception('wrong net amount.');
+            throw new \Exception('błędna wartość netto.');
         }
 
         $result['net_amount'] = (float)$calculationData['net_amount'];
 
 
         if (!isset($calculationData['vat_rate']) || $calculationData['vat_rate'] == null) {
-            throw new \Exception('wrong VAT rate.');
+            throw new \Exception('błedna stawka VAT.');
         }
 
         $result['vat_rate'] = (float)$calculationData['vat_rate'];
@@ -179,7 +179,7 @@ class GrossCalculatorService
     private function getCalculationSuccessMessage(): string
     {
 
-        return sprintf('Cena produktu %s, wynosi: %.2f zł brutto, kwota podatku to %.2f zł.'
+        return sprintf('Cena produktu <b>%s</b>, wynosi: <b>%.2f zł</b> brutto, kwota podatku to <b>%.2f zł</b>.'
             , $this->productName
             , $this->grossAmount,
             $this->taxAmount);

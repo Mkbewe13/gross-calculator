@@ -54,21 +54,24 @@ class GrossCalculationForm
 
         return sprintf('
             %s
+            <div class="gross-calc-form-center">
+             <span class="dashicons dashicons-money-alt"></span>
+             <p>Gross Calculator</p>
             <form action="" method="post">
-            <h4>Gross Calculator</h4>
             %s
-            <input type="text"  name="calculation[product_name]" placeholder="Product Name" required/>
+            <input type="text" class="gross-calc-input"  name="calculation[product_name]" placeholder="Product Name" required/>
             <br>
-            <input type="number" name="calculation[net_amount]" placeholder="Net Amount" step=".01" required/>
+            <input type="number" class="gross-calc-input" name="calculation[net_amount]" placeholder="Net Amount" step=".01" required/>
             <br>
-            <input type="text"  name="calculation[currency]" value="%s" disabled/>
+            <input type="text"  class="gross-calc-input" name="calculation[currency]" value="%s" disabled/>
             <br>
-            <select name="calculation[vat_rate]" required>
+            <select class="gross-calc-input" name="calculation[vat_rate]" required>
             %s
             </select>
             <br>
-            <button value="calculate" type="submit">Oblicz</button>
-            </form>',
+            <button class="gross-calc-submit" value="calculate" type="submit">Oblicz</button>
+            </form>
+            </div>',
             $this->getMessageHtml($messageContent,$success),
             wp_nonce_field('gross_calculation', 'gross_calculation_nonce'),
             self::CALCULATION_CURRENCY,
@@ -114,8 +117,14 @@ class GrossCalculationForm
             return '';
         }
 
+        if ($success){
+            return sprintf('
+        <p class="gross-calc-success">%s</p>
+        ', $messageContent);
+        }
+
         return sprintf('
-        <p>%s</p>
+        <p class="gross-calc-failed">%s</p>
         ', $messageContent);
     }
 }
