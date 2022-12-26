@@ -21,7 +21,11 @@ require_once dirname(__FILE__) . '/vendor/autoload.php';
 
 class GrossCalculator{
 
+    const MINIMUM_PHP_VERSION = '7.4.0';
+
     public function init(){
+
+        register_activation_hook(__FILE__, [$this, 'activation']);
 
         add_action('init', [$this,'registerCPTs'], 0);
 
@@ -49,6 +53,13 @@ class GrossCalculator{
        GrossCalculationForm::register();
     }
 
+
+    public function activation()
+    {
+        if(version_compare(phpversion(),self::MINIMUM_PHP_VERSION,'<')){
+            die('Plugin Gross Calculator wymaga PHP w wersji większej lub równej ' . self::MINIMUM_PHP_VERSION);
+        }
+    }
 
 }
 
