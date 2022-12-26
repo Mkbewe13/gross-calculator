@@ -59,13 +59,15 @@ class GrossCalculationForm
              <p>Gross Calculator</p>
             <form action="" method="post">
             %s
-            <input type="text" class="gross-calc-input"  name="calculation[product_name]" placeholder="Product Name" required/>
+            <input type="text" class="gross-calc-input"  name="calculation[product_name]" placeholder="Nazwa produktu" required/>
             <br>
-            <input type="number" class="gross-calc-input" name="calculation[net_amount]" placeholder="Net Amount" step=".01" required/>
+            <input type="number" class="gross-calc-input" name="calculation[net_amount]" placeholder="Wartośc netto" step=".01" required/>
             <br>
             <input type="text"  class="gross-calc-input" name="calculation[currency]" value="%s" disabled/>
             <br>
-            <select class="gross-calc-input" name="calculation[vat_rate]" required>
+            <label class="gross-calc-label" for="vat_rate">Stawka VAT:</label>
+            <br>
+            <select id="vat_rate" class="gross-calc-input" name="calculation[vat_rate]" required>
             %s
             </select>
             <br>
