@@ -52,7 +52,7 @@ class GrossCalculatorService
         try {
             $service = new self($calculationData);
         } catch (\Exception $e) {
-            throw new \Exception($e);
+            throw new \Exception($e->getMessage());
         }
 
         $postData = [
@@ -85,24 +85,24 @@ class GrossCalculatorService
         $result = array();
 
         if (empty($calculationData)) {
-            throw new \Exception('Wrong calculation data.');
+            throw new \Exception('wrong calculation data.');
         }
 
         if (!isset($calculationData['product_name']) || !$calculationData['product_name']) {
-            throw new \Exception('Wrong product name.');
+            throw new \Exception('wrong product name.');
         }
 
         $result['product_name'] = sanitize_text_field($calculationData['product_name']);
 
         if (!isset($calculationData['net_amount']) || !$calculationData['net_amount']) {
-            throw new \Exception('Wrong net amount.');
+            throw new \Exception('wrong net amount.');
         }
 
         $result['net_amount'] = (float)$calculationData['net_amount'];
 
 
-        if (!isset($calculationData['vat_rate']) || !$calculationData['vat_rate']) {
-            throw new \Exception('Wrong VAT rate.');
+        if (!isset($calculationData['vat_rate']) || $calculationData['vat_rate'] == null) {
+            throw new \Exception('wrong VAT rate.');
         }
 
         $result['vat_rate'] = (float)$calculationData['vat_rate'];
