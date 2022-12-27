@@ -43,13 +43,16 @@ class GrossCalculationForm
         $messageContent = '';
         $success = true;
 
-        if (!empty($_POST['calculation'])) {
+        if (!empty($_POST['calculation']) && !empty($_POST['gross_calculation_nonce'])) {
+
             try {
+                GrossCalculatorService::validateNonce($_POST['gross_calculation_nonce']);
                 $messageContent = GrossCalculatorService::createCalculation($_POST['calculation']);
             } catch (\Exception $e) {
                 $messageContent = $e->getMessage();
                 $success = false;
             }
+
         }
 
         return sprintf('

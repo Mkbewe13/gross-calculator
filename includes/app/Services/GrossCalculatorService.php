@@ -185,4 +185,18 @@ class GrossCalculatorService
             $this->taxAmount);
 
     }
+
+    /**
+     * Nonce field validation
+     *
+     * @param string $nonce
+     * @return void
+     * @throws \Exception
+     */
+    public static function validateNonce(string $nonce){
+        if(wp_verify_nonce($nonce,'gross_calculation') == false){
+            throw new \Exception('Wystąpił błąd: niewłaściwy token.');
+        }
+
+    }
 }
